@@ -29,12 +29,16 @@ server.get('/location',(request,response)=> {
   response.status(200).send(newObj) ;
 
 })
+
+// constructor for the weather feature . . .
 function Deploy(data_1,data_2){
   this.forecast = data_2
   this.time = data_1
   Deploy.all.push(this)
 }
-Deploy.all = []
+Deploy.all = [] ;
+
+
 server.get('/weather',(request,response)=> {
   // response.status(200).send('still works!') ;
   const data_prep = require('./data/darksky.json') ;
@@ -52,12 +56,14 @@ server.get('/weather',(request,response)=> {
   response.send(Deploy.all)
 
 })
-server.use('*',(request , response) => {
-  response.status(404).send('Ooops Not Found !!');
-});
 
+
+// for checking the errors . . .
 server.use((error, request , response) => {
   response.status(500).send(error);
+});
+server.use('*',(request , response) => {
+  response.status(404).send('Ooops Not Found !!');
 });
 
 
